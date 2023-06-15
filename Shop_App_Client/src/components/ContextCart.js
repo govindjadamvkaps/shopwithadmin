@@ -31,7 +31,7 @@ const ContextCart = () => {
     const fetchMen = async () => {
         try {
             const resp = await axios.get(`http://localhost:5000/products/category/6481778f84241f241e000daa`)
-            console.log(resp.data)
+            // console.log(resp.data)
             setMen(resp.data)
         } catch (error) {
             console.log('error in fetchig product of men', error)

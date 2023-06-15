@@ -12,7 +12,7 @@ const WishList = () => {
     const fetchProductOfWishList = async()=>{
         try {
             const resp = await axios.get(`http://localhost:5000/wishlist/get-product/${userId}`)
-            setData(resp.data.data)
+            setData(resp.data.data.productId)
             // console.log("ewsaa", resp.data)
         } catch (error) {
             console.log("error in get product of wishlist", error)
@@ -20,11 +20,11 @@ const WishList = () => {
     }
     useEffect(()=>{
         fetchProductOfWishList()
-    },[data])
+    },[])
 
-    const handleClick = async(id)=>{
+    const handleClick = async(pId)=>{
         try {
-            const resp = await axios.delete(`http://localhost:5000/wishlist/delete-product/${id}`)
+            const resp = await axios.delete(`http://localhost:5000/wishlist/delete-product/${userId}/${pId}`)
             console.log(resp.data)
 
             if(resp.status===StatusCodes.OK)
@@ -33,6 +33,9 @@ const WishList = () => {
                     position:"top-center"
                 })
             }
+            const res = await axios.get(`http://localhost:5000/wishlist/get-product/${userId}`)
+            setData(res.data.data.productId)     
+
         } catch (error) {
             toast.error('error product delete from wishlist',{
                 position:"top-center"
@@ -61,10 +64,10 @@ const WishList = () => {
             return (
               <Col lg={4} className="mt-4">
                 <div className="card" style={{width: "18rem"}}>
-                  <img src={`http://localhost:5000/public/images/${curItem.productId.pImage}`} height="500px" width="50px" className="card-img-top" alt="..." />
+                  <img src={`http://localhost:5000/public/images/${curItem .pImage}`} height="500px" width="50px" className="card-img-top" alt="..." />
                   <div className="card-body">
-                    <h4 className="card-title">{curItem.productId.pName}</h4>
-                    <h5 className="card-title">Price &#8377;{curItem.productId.pPrice}</h5>
+                    <h4 className="card-title">{curItem.pName}</h4>
+                    <h5 className="card-title">Price &#8377;{curItem .pPrice}</h5>
                   
                     <Button variant="danger" onClick={()=>handleClick(curItem._id)}>Delete</Button>
                     

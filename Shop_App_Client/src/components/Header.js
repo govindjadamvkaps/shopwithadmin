@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import NavBar from "./NavBar";
-
+import {FcLike} from 'react-icons/fc'
 const Header = () => {
 
   // const [tokenn, setTokenn] = useState(null);
@@ -14,6 +14,7 @@ const Header = () => {
   // }
   
   const [cartData, setCartData]=useState([])
+  const [wishListData, setWishListData] = useState([])
   const user_id = localStorage.getItem("_id")
 
   const fetchCart = async()=>{
@@ -27,8 +28,19 @@ const Header = () => {
     }
   }
 
+  const fetchWishList = async() =>{
+    try {
+      const resp = await axios.get(`http://localhost:5000/wishlist/get-product/${user_id}`)
+      console.log("wishlist..:=>", resp.data)
+      setWishListData(resp.data.data.productId)
+    } catch (error) {
+      
+    }
+  }
+
   useEffect(()=>{
     fetchCart()
+    fetchWishList()
   },[cartData])
 
 
@@ -49,6 +61,7 @@ const Header = () => {
 
   return (
     <>
+   
       <header className="site-navbar" role="banner">
         <div className="site-navbar-top">
           <div className="container">
@@ -82,9 +95,16 @@ const Header = () => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/product/wishlist">
-                        <span className="icon icon-heart-o" />
-                      </NavLink>
+                  {
+                   ! wishListData.length ?<NavLink to="/product/wishlist">
+                    <span className="icon icon-heart-o" />
+                  </NavLink>:
+                   <NavLink to="/product/wishlist">
+                   <FcLike  style={{height:"60px", width:"30px"}}/>
+                 </NavLink>
+                  }
+                      
+                     
                     </li>
                     <li>
                     

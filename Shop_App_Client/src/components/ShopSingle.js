@@ -33,15 +33,15 @@ const ShopSingle = () => {
   const handleClick = async () => {
     try {
       const value = singleData.pPrice * quantity
-      console.log(value)
-      console.log(quantity)
+      // console.log(value)
+      // console.log(quantity)
       const resp = await axios.post(`http://localhost:5000/insert-cart`, {
         productId: id,
         userId: userId,
         totalPrice: value,
         quantity: quantity
       })
-      console.log(resp)
+      // console.log(resp)
 
       if (resp.status === StatusCodes.CREATED) {
         toast.success("product is added", {
@@ -75,7 +75,7 @@ const ShopSingle = () => {
         productId: id,
         userId: userId
       })
-      console.log(resp.data.data)
+      // console.log(resp.data.data)
       if (resp.status === StatusCodes.CREATED) {
         toast.success("product is add in wish-list", {
           position: 'top-center'
@@ -192,7 +192,7 @@ const ShopSingle = () => {
               </div>
               {/* to={`/cart/${singleData._id}`} */}
               <p>
-                <NavLink className="buy-now btn btn-sm btn-primary" onClick={handleClick}>
+                <NavLink className="buy-now btn btn-sm btn-primary" onClick={handleClick} data-toggle="tooltip" title="Add to Cart">
                   Add To Cart
                 </NavLink>
               </p>

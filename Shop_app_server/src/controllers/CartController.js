@@ -110,7 +110,7 @@ export async function deleteCart(req, res) {
 export async function addToCart(req, res) {
 
     try {
-        console.log("Body : => ", req.body)
+        // console.log("Body : => ", req.body)
         const cart = await CartModel.findOne({ userId: req.body.userId }).populate('productId')
         // console.log("Cart data : ", cart);
         if (!cart) {

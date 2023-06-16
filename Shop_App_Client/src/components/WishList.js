@@ -25,7 +25,7 @@ const WishList = () => {
     const handleClick = async(pId)=>{
         try {
             const resp = await axios.delete(`http://localhost:5000/wishlist/delete-product/${userId}/${pId}`)
-            console.log(resp.data)
+            // console.log(resp.data)
 
             if(resp.status===StatusCodes.OK)
             {

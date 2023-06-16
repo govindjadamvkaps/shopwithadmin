@@ -3,6 +3,7 @@ import WishListModel from "../models/WishListModel.js";
 
 export async function AddWishList(req, res) {
     try {
+        const productId = req.body.productId
         const user = await WishListModel.findOne({ userId: req.body.userId })
         // console.log("userrr", user)
 
@@ -12,13 +13,21 @@ export async function AddWishList(req, res) {
             return res.status(StatusCodes.CREATED).json({ data: saveProduct, message: "product is add to wishlist", success: true })
 
         }
-        user.productId.push(req.body.productId)
-        const saveProduct = await user.save()
-        return res.status(StatusCodes.CREATED).json({ data: saveProduct, message: "product is add to wishlist", success: true })
+
+        const itemIndex = user.productId.findIndex((item)=>item==productId)        
+        // console.log("indeddfsd", itemIndex)
+
+        if(itemIndex==-1){
+            user.productId.push(req.body.productId)
+            const saveProduct = await user.save()
+            return res.status(StatusCodes.CREATED).json({ data: saveProduct, message: "product is add to wishlist", success: true })
+        }
+        
+        return res.status(StatusCodes.BAD_REQUEST).json({message:"product already in wishList"})
 
     } catch (error) {
         console.log("error in save product in wishList", error)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "error in save product in wishList", success: false })
+        return   res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: "error in save product in wishList", success: false })
     }
 }
 

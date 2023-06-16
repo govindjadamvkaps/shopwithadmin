@@ -49,6 +49,7 @@ const ShopSingle = () => {
         })
         history("/cart")
       }
+      
     } catch (error) {
       console.log("error in send cart data ", error)
       toast.error("error")
@@ -81,8 +82,12 @@ const ShopSingle = () => {
           position: 'top-center'
         })
       }
+      
     } catch (error) {
       console.log("error in add product in wishlist", error)
+      toast.warning('product is already add in wish-list',{
+        position:'top-center'
+      })
     }
   }
   return (

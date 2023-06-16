@@ -31,7 +31,7 @@ const Header = () => {
   const fetchWishList = async() =>{
     try {
       const resp = await axios.get(`http://localhost:5000/wishlist/get-product/${user_id}`)
-      console.log("wishlist..:=>", resp.data)
+      // console.log("wishlist..:=>", resp.data)
       setWishListData(resp.data.data.productId)
     } catch (error) {
       
@@ -96,10 +96,10 @@ const Header = () => {
                     </li>
                     <li>
                   {
-                   ! wishListData.length ?<NavLink to="/product/wishlist">
+                   ! wishListData.length ?<NavLink to="/product/wishlist" data-toggle="tooltip" title=" WishList">
                     <span className="icon icon-heart-o" />
                   </NavLink>:
-                   <NavLink to="/product/wishlist">
+                   <NavLink to="/product/wishlist" data-toggle="tooltip" title=" WishList">
                    <FcLike  style={{height:"60px", width:"30px"}}/>
                  </NavLink>
                   }
@@ -108,7 +108,7 @@ const Header = () => {
                     </li>
                     <li>
                     
-                      <NavLink to="/cart" className="site-cart">
+                      <NavLink to="/cart" className="site-cart" data-toggle="tooltip" title="Cart ">
                         <span className="icon icon-shopping_cart" />
                         <span className="count">{totalCart()}</span>
                       </NavLink>
